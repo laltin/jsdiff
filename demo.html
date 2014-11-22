@@ -1,0 +1,32 @@
+<html>
+<head>
+    <script src="jsdiff.js"></script>
+    <script>
+        function compare()
+        {
+            var text1 = document.getElementById("text1").value;
+            var text2 = document.getElementById("text2").value;
+            
+            document.getElementById("diffs").innerHTML = diff_words(text1, text2);
+        }
+    </script>
+    <style>
+        del { background:#FFE6E6; }
+        ins { background:#E6FFE6; }
+    </style>
+</head>
+<body>
+    <textarea id="text1" style="width:400px; height:300px;">Lorem ipsum dolor sit amet, consectetur adipiscing elit. Pellentesque consectetur tellus ac sapien hendrerit rhoncus at pretium purus. Morbi non felis a ipsum eleifend bibendum a sed justo. Nulla facilisi. Suspendisse sit amet rhoncus lorem. In id eleifend neque, eu cursus odio. In lobortis commodo nibh. In cursus quam at efficitur venenatis. Vivamus tristique eros sed arcu pretium volutpat. Maecenas lobortis sollicitudin fermentum. Nullam hendrerit pulvinar ante eu condimentum. Nullam eget sapien nec nulla lacinia blandit. Donec auctor dignissim diam, at dictum risus pharetra ut. Quisque ornare eros urna, quis maximus est mattis nec. Cras egestas varius quam ac vulputate.
+
+Cras tincidunt interdum ipsum, ac ornare dui vestibulum sed. Duis semper eu lacus vel euismod. Donec ut metus iaculis, bibendum ipsum a, condimentum lacus. Aliquam vel lectus dui. Integer volutpat dignissim ultrices. Pellentesque lectus nunc, mollis sit amet molestie ut, fermentum in magna. Praesent scelerisque ligula sed velit accumsan interdum. Nulla nec dignissim augue. Integer venenatis et dolor at scelerisque. Duis lorem libero, scelerisque vel tellus in, dignissim euismod turpis. Quisque ac purus non erat tincidunt fringilla.</textarea>
+    <textarea id="text2" style="width:400px; height:300px;">Lorem ipsum dolor sit amer, consectetur adipiscing elit. Pellentesque consectetur tellus ac sapien hendrerit rhoncus at pretium purus. Morbi non felis a ipsum eleifend bibendum a sed justo. Nulla facilisi. Suspendisse sit amet rhoncus lorem.
+
+In id eleifend neque, eu cursus odio. In lobortis commodo nibh. In cursus quam at efficitur venenatis. Vivamus tristique eros sed arcu pretium volutpat. Pellentesque et nulla elit. Maecenas lobortis sollicitudin fermentum. Nullam hendrerit pulvinar ante eu condimentum. Donec auctor dignissim diam, at dictum risus pharetra ut. Quisque ornare eros urna, quis maximus est mattis nec. Cras egestas varius quam ac vulputate. Cras tincidunt interdum ipsum, ac ornare dui vestibulum sed. Duis semper eu lacus vel euismod. Donec ut metus iaculis, bibendum ipsum a, condimentum lacus.
+
+Aliquam vel lectus dui. Integer volutpat dignissim ultrices. Pellentesque lectus nunc, mollis sit amet molestie ut, fermentum in magna. Praesent scelerisque ligula sed velit accumsan interdum. Nulla nec dignissim augue. Integer venenatis et dolor at scelerisque. Duis lorem libero, scelerisque vel tellus in, dignissim euismod turpis. Quisque ac purus non erat tincidunt fringilla.</textarea>
+    <br />
+    <button onclick="compare();">compare</button>
+    <br />
+    <pre id="diffs" style="white-space:pre-wrap; width:800px; font-family:sans-serif;"></pre>
+</body>    
+</html>
