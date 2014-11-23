@@ -4,17 +4,6 @@
  * http://github.com/laltin/jsdiff
  */
 
-function escape (s)
-{
-     var n = s;
-     n = n.replace(/&/g, "&amp;");
-     n = n.replace(/</g, "&lt;");
-     n = n.replace(/>/g, "&gt;");
-     n = n.replace(/"/g, "&quot;");
-     
-     return n;
-}
-
 function word_split(s)
 {
     if (s == "")
@@ -27,11 +16,15 @@ function word_split(s)
     {
         tokens = ws[i].split("\n"); // \n character is treated as a word
         
-        words.push( tokens[0] );
+        if (tokens[0] != "")
+            words.push( tokens[0] );
+            
         for (var j=1; j < tokens.length; j++)
         {
             words.push( "\n" );
-            words.push( tokens[j] );
+            
+            if (tokens[j] != "")
+                words.push( tokens[j] );
         }
     }
     
@@ -40,40 +33,47 @@ function word_split(s)
 
 function diff_words (o, n)
 {
+    // solve problem with same unicode char represented in different ways
+    try
+    {
+        o = o.normalize('NFC');
+        n = n.normalize('NFC');
+    }
+    catch(err)
+    {
+        // normalize method not supported in Safari
+    }
+    
     var changes = diff( word_split(o), word_split(n) );
     var str = "";
     
-    for (var i=0; i<changes.changes.length; i++)
+    for (var i=0; i < changes.changes.length; i++)
     {
-        var newline = changes.text[i] == "\n";
+        var newline = ( changes.text[i] == "\n" );
         
-        if (changes.changes[i] < 0)
+        if (changes.changes[i] < 0) // char removed
         {
             if (newline)
-                str += "<del>&crarr; </del>";
+                str += "<del>&crarr;</del> ";
             else
-                str += "<del>" + changes.text[i] + "</del>";
+                str += "<del>" + changes.text[i] + "</del> ";
         }
-        else if (changes.changes[i] > 0)
+        else if (changes.changes[i] > 0) // char inserted
         {
             if (newline)
-                str += "<ins>&crarr;\n</ins>";
+                str += "<ins>&crarr;</ins>\n";
             else
-                str += "<ins>" + changes.text[i] + "</ins>";
+                str += "<ins>" + changes.text[i] + "</ins> ";
         }
-        else
+        else // no change
         {
             str += changes.text[i];
-        }
-        
-        if (!newline)
-        {
-            str += " ";
+            if (!newline)
+                str += " ";
         }
     }
     
-    // combine consecutive differences
-    return str.replace(/<\/del>\s+<del>/g, " ").replace(/<\/ins>\s+<ins>/g, " ");
+    return str;
 }
 
 /*
