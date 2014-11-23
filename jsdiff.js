@@ -73,7 +73,8 @@ function diff_words (o, n)
         }
     }
     
-    return str;
+    // combine consecutive edits
+    return str.replace(/<\/del> <del>/g, " ").replace(/<\/ins> <ins>/g, " ");
 }
 
 /*
